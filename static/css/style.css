@@ -1,0 +1,686 @@
+/* LankaTravelMate - Paradise Island Theme with Three.js Animation */
+
+/* Import fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap');
+
+/* Variables */
+:root {
+  /* Island-inspired color palette */
+  --primary: #00acc1;
+  --primary-light: #5ddef4;
+  --primary-dark: #007c91;
+  --accent: #ff6f00;
+  --accent-light: #ffa040;
+  --accent-dark: #c43e00;
+  --neutral: #f5f5f5;
+  --neutral-dark: #e0e0e0;
+  --success: #00897b;
+  --warning: #ffab00;
+  --danger: #f44336;
+  
+  /* Text colors */
+  --text-dark: #263238;
+  --text-medium: #546e7a;
+  --text-light: #78909c;
+  --text-on-primary: #fff;
+  
+  /* UI elements */
+  --card: rgba(255, 255, 255, 0.92);
+  --card-solid: #ffffff;
+  --border: rgba(225, 231, 236, 0.5);
+  
+  /* Effects */
+  --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 4px 10px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 12px 28px rgba(0, 0, 0, 0.15);
+  --glass: backdrop-filter: blur(10px);
+  --transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+  
+  /* Spacing */
+  --radius: 16px;
+  --radius-sm: 10px;
+  --radius-lg: 24px;
+  --radius-round: 50px;
+}
+
+/* Animated Background Canvas */
+#bg-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* Base styles */
+body {
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 1.6;
+  background: linear-gradient(135deg, #e0f7fa, #80deea);
+  overflow-x: hidden;
+}
+
+/* Glassmorphic container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 2rem;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Floating elements animation */
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-15px) rotate(2deg); }
+}
+
+/* Title styling */
+h2 {
+  font-family: 'Cormorant Garamond', serif;
+  color: var(--primary-dark);
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  position: relative;
+  text-align: center;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Add decorative line below title */
+h2:after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, var(--accent-light), var(--accent), var(--accent-dark));
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(255, 111, 0, 0.2);
+}
+
+.text-center { text-align: center; }
+.mb-4 { margin-bottom: 1.5rem; }
+.mt-3 { margin-top: 1rem; }
+.mt-5 { margin-top: 3rem; }
+
+/* Chat box with glassmorphic effect */
+#chat-box {
+  height: 650px !important;
+  width: 100% !important;
+  max-width: 1000px !important;
+  margin: 0 auto;
+  background-color: var(--card) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border-radius: var(--radius-lg) !important;
+  border: 1px solid var(--border) !important;
+  box-shadow: var(--shadow-lg) !important;
+  padding: 25px !important;
+  overflow-y: auto !important;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Chat box hover effect */
+#chat-box:hover {
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Welcome message with accent */
+#chat-box::before {
+  content: "Ayubowan! Welcome to paradise in Sri Lanka. I'm your island guide ready to craft your perfect tropical adventure! 🏝️";
+  display: block;
+  background: linear-gradient(to right, rgba(0, 172, 193, 0.1), rgba(0, 172, 193, 0.2));
+  border-left: 4px solid var(--primary);
+  padding: 20px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 25px;
+  color: var(--text-dark);
+  font-size: 1.05rem;
+  font-weight: 500;
+  position: relative;
+  padding-left: 45px;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Add palm tree icon to welcome message */
+#chat-box::after {
+  content: "🌴";
+  position: absolute;
+  top: 43px;
+  left: 45px;
+  font-size: 20px;
+}
+
+/* Stylish scrollbar */
+#chat-box::-webkit-scrollbar {
+  width: 8px;
+}
+
+#chat-box::-webkit-scrollbar-track {
+  background: rgba(241, 241, 241, 0.5);
+  border-radius: 10px;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+  background: var(--primary-light);
+  opacity: 0.8;
+  border-radius: 10px;
+}
+
+#chat-box::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Message bubbles */
+.bot, .user {
+  padding: 18px 22px;
+  margin-bottom: 25px;
+  border-radius: var(--radius);
+  max-width: 80%;
+  position: relative;
+  line-height: 1.6;
+  font-size: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Bot message - with island blue color */
+.bot {
+  align-self: flex-start;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 247, 250, 0.95));
+  color: var(--text-dark);
+  margin-right: auto;
+  border-bottom-left-radius: 6px;
+  transform-origin: left bottom;
+  animation: wave-in 0.7s ease-out;
+}
+
+@keyframes wave-in {
+  0% { opacity: 0; transform: translateX(-20px) translateY(10px); }
+  60% { opacity: 1; transform: translateX(5px) translateY(-5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* Add speech bubble pointer */
+.bot::before {
+  content: "";
+  position: absolute;
+  left: -12px;
+  bottom: 15px;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-right: 12px solid rgba(224, 247, 250, 0.95);
+  border-bottom: 12px solid transparent;
+}
+
+/* User message - with sunset accent color */
+.user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: white;
+  margin-left: auto;
+  text-align: right;
+  border-bottom-right-radius: 6px;
+  transform-origin: right bottom;
+  animation: float-in 0.7s ease-out;
+}
+
+@keyframes float-in {
+  0% { opacity: 0; transform: translateX(20px) translateY(10px); }
+  60% { opacity: 1; transform: translateX(-5px) translateY(-5px); }
+  100% { transform: translateX(0) translateY(0); }
+}
+
+/* Add speech bubble pointer for user */
+.user::before {
+  content: "";
+  position: absolute;
+  right: -12px;
+  bottom: 15px;
+  width: 0;
+  height: 0;
+  border-top: 12px solid transparent;
+  border-left: 12px solid var(--accent-dark);
+  border-bottom: 12px solid transparent;
+}
+
+/* Bot name styling with palm icon */
+.bot b {
+  color: var(--primary-dark);
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  gap: 6px;
+}
+
+.bot b::before {
+  content: "🌴";
+  font-size: 14px;
+}
+
+/* User name styling with sun icon */
+.user b {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  gap: 6px;
+}
+
+.user b::after {
+  content: "🌞";
+  font-size: 14px;
+}
+
+/* Form with accent border */
+#chat-form {
+  margin-top: 30px;
+  display: flex;
+  position: relative;
+  border-radius: var(--radius-round);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  background-color: var(--card-solid);
+  border: 1px solid var(--border);
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#chat-form:focus-within {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Input field */
+#user-input {
+  flex: 1;
+  padding: 18px 25px;
+  border: none;
+  font-size: 1rem;
+  background: transparent;
+  font-family: 'Poppins', sans-serif;
+  color: var(--text-dark);
+  outline: none;
+}
+
+#user-input::placeholder {
+  color: var(--text-light);
+}
+
+/* Focus effect for input */
+#user-input:focus {
+  box-shadow: 0 0 0 2px rgba(0, 172, 193, 0.1) inset;
+}
+
+/* Button with island gradient */
+.btn-primary {
+  padding: 16px 30px;
+  background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+  color: white;
+  border: none;
+  border-radius: var(--radius-round);
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: 'Poppins', sans-serif;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+/* Button hover effect with ripple */
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  transition: width 0.6s ease, height 0.6s ease;
+}
+
+.btn-primary:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Add coconut drink icon to button */
+.btn-primary::after {
+  content: "🥥";
+  font-size: 1.2em;
+  transition: transform 0.3s ease;
+}
+
+.btn-primary:hover::after {
+  transform: translateX(3px) rotate(15deg);
+}
+
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+/* Hover effects */
+.bot:hover, .user:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+
+/* Iframe styling */
+.bot iframe {
+  border-radius: var(--radius-sm);
+  margin-top: 15px;
+  max-width: 100%;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Time indicators */
+.bot::after,
+.user::after {
+  content: attr(data-time);
+  position: absolute;
+  font-size: 0.75rem;
+  bottom: -20px;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.bot::after {
+  left: 5px;
+  color: var(--text-light);
+}
+
+.user::after {
+  right: 5px;
+  color: var(--text-light);
+}
+
+/* Location styling with glassmorphic effect */
+.location-message {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9), rgba(240, 247, 255, 0.9));
+  backdrop-filter: blur(5px);
+  padding: 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid var(--accent);
+  margin-bottom: 25px;
+  box-shadow: var(--shadow);
+  animation: fade-in 0.5s ease;
+}
+
+.location-title {
+  font-weight: 600;
+  color: var(--accent-dark);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1.1rem;
+}
+
+.location-title::before {
+  content: "🏝️";
+  font-size: 1.2em;
+}
+
+/* Map container */
+.map-container {
+  height: 250px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 15px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease;
+}
+
+.map-container:hover {
+  transform: scale(1.01);
+}
+
+/* Typing indicator with wave animation */
+.typing {
+  display: flex;
+  align-items: center;
+  margin: 12px 0;
+  padding: 12px 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(224, 247, 250, 0.95));
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  box-shadow: var(--shadow-sm);
+}
+
+.typing-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--primary);
+  border-radius: 50%;
+  margin-right: 5px;
+  animation: wave 1.5s linear infinite;
+}
+
+.typing-dot:nth-child(1) { animation-delay: 0s; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes wave {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-10px); }
+}
+
+/* Responsive design */
+@media (max-width: 1100px) {
+  .container {
+    padding: 1.5rem;
+  }
+  
+  #chat-box {
+    height: 600px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  h2 {
+    font-size: 2rem;
+  }
+  
+  #chat-box {
+    padding: 20px !important;
+    height: 550px !important;
+  }
+  
+  .bot, .user {
+    max-width: 90%;
+    padding: 15px 18px;
+  }
+  
+  .map-container {
+    height: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  body {
+    padding: 0;
+  }
+  
+  h2 {
+    font-size: 1.6rem;
+  }
+  
+  h2:after {
+    width: 70px;
+  }
+  
+  #chat-box {
+    height: 500px !important;
+    padding: 15px !important;
+  }
+  
+  #user-input {
+    padding: 15px 18px;
+  }
+  
+  .btn-primary {
+    padding: 15px 20px;
+  }
+  
+  .btn-primary::after {
+    display: none;
+  }
+}
+
+/* Status indicators with pulse animation */
+.status-indicator {
+  width: auto;
+  height: auto;
+  position: relative;
+  padding: 5px 14px;
+  font-size: 12px;
+  border-radius: var(--radius-round);
+  margin-top: 5px;
+  display: inline-block;
+  font-weight: 500;
+}
+
+.status-online {
+  background-color: rgba(0, 137, 123, 0.15);
+  color: var(--success);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0.4); }
+  70% { box-shadow: 0 0 0 6px rgba(0, 137, 123, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0); }
+}
+
+.status-typing {
+  background-color: rgba(0, 172, 193, 0.15);
+  color: var(--primary);
+}
+
+/* Emoji reaction with pop effect */
+.emoji-reaction {
+  position: absolute;
+  bottom: -12px;
+  font-size: 20px;
+  background: white;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+  transform: scale(0);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  z-index: 2;
+}
+
+.bot:hover .emoji-reaction,
+.user:hover .emoji-reaction {
+  transform: scale(1);
+}
+
+.bot .emoji-reaction {
+  left: 10px;
+}
+
+.user .emoji-reaction {
+  right: 10px;
+}
+
+/* Emoji reaction animation */
+.emoji-reaction:hover {
+  transform: scale(1.4) rotate(15deg) !important;
+  background-color: #fff9e6;
+}
+
+/* Info messages with glassmorphic effect */
+.info-message {
+  text-align: center;
+  padding: 14px 20px;
+  margin: 18px auto;
+  border-radius: var(--radius);
+  font-size: 14px;
+  max-width: 85%;
+  position: relative;
+  animation: fade-in 0.5s ease;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.info-normal {
+  background-color: rgba(0, 172, 193, 0.12);
+  color: var(--primary-dark);
+  border-top: 3px solid var(--primary);
+}
+
+.info-success {
+  background-color: rgba(0, 137, 123, 0.12);
+  color: var(--success);
+  border-top: 3px solid var(--success);
+}
+
+.info-error {
+  background-color: rgba(244, 67, 54, 0.12);
+  color: var(--danger);
+  border-top: 3px solid var(--danger);
+}
+
+/* Floating icons animation */
+.floating-icon {
+  position: absolute;
+  font-size: 24px;
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -1;
+  animation: float 6s ease-in-out infinite;
+}
+
+.island-icon { top: 10%; left: 5%; animation-delay: 0s; }
+.shell-icon { top: 15%; right: 10%; animation-delay: 1s; }
+.sun-icon { bottom: 20%; left: 8%; animation-delay: 2s; }
+.wave-icon { bottom: 15%; right: 5%; animation-delay: 3s; }

@@ -1,2 +1,1 @@
-# mytravelchatbot
-TourismChatBot
+# LankaTravelMate Enhanced - Chatbot Project
