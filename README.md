@@ -1,4 +1,4 @@
-Welcom To LankaTravelMate_ChatBot
+# Welcom To LankaTravelMate_ChatBot
 ![Image alt](https://github.com/ChathushkaSanjaya1/LankaTravelMate_ChatBot/blob/5a5c262801b07205573f84748f7cc5a97b1c71ce/LankaTravelMate.png)
 To begin using the LankaTravelMate chatbot, users must first download the complete project from GitHub. Visit the GitHub repository where the project is hosted (for example:(https://github.com/ChathushkaSanjaya1/mytravelchatbot/commits author=ChathushkaSanjaya1)/mytravelchatbot) and click on the green “Code” button. From there, select the “Download ZIP” option and save the file to your computer. Once downloaded, extract the ZIP file to a suitable location on your local machine.
 
